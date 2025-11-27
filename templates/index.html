@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Emotion2Color — AI-Driven Emotion Visualization</title>
+
+  <!-- Google Font -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Font Awesome for icons -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+
+  <!-- ✅ Main stylesheet served by Flask -->
+  <link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='styles.css') }}?v=1"
+  />
+</head>
+
+<body>
+  <!-- ================== NAVBAR ================== -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="#" class="logo">
+        <img
+          src="{{ url_for('static', filename='assets/logo.svg') }}"
+          alt="Emotion2Color logo"
+          class="logo-icon"
+        />
+        <span class="logo-text">Emotion<span>2</span>Color</span>
+      </a>
+
+      <nav class="nav-links" id="navLinks">
+        <a href="#hero">Home</a>
+        <a href="#how-it-works">How it works</a>
+        <a href="#demo">Live Demo</a>
+        <a href="#journal">Mood Journal</a>
+      </nav>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- ================== HERO ================== -->
+  <section class="hero" id="hero">
+    <div class="container hero-container">
+      <div class="hero-content">
+        <h1>Turn your emotions into <span>living color art.</span></h1>
+        <p>
+          Emotion2Color listens to how you feel, then generates unique color
+          compositions powered by AI. Journal your moods, visualize your inner
+          world, and track your emotional journey over time.
+        </p>
+
+        <div class="hero-cta">
+          <a href="#demo" class="btn btn-primary">
+            <i class="fas fa-wand-magic-sparkles"></i>
+            Try Live Demo
+          </a>
+          <a href="#how-it-works" class="btn btn-ghost">
+            <i class="fas fa-circle-play"></i>
+            How it works
+          </a>
+        </div>
+
+        <div class="hero-highlights">
+          <div class="highlight-chip">
+            <i class="fas fa-brain"></i> AI-powered color engine
+          </div>
+          <div class="highlight-chip">
+            <i class="fas fa-book-open"></i> Mood journaling
+          </div>
+          <div class="highlight-chip">
+            <i class="fas fa-lock"></i> Your data stays private
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-preview">
+        <div class="preview-card">
+          <div class="preview-header">
+            <span class="badge">Emotion Preview</span>
+            <span class="preview-status">
+              <span class="status-dot"></span> Live
+            </span>
+          </div>
+          <div class="preview-art" id="heroPreviewArt">
+            <!-- gradient background is controlled by CSS & JS -->
+          </div>
+          <div class="preview-footer">
+            <p class="preview-emotion">“Anxious but hopeful.”</p>
+            <div class="preview-swatches">
+              <span class="swatch" style="--swatch-color: #2e294e"></span>
+              <span class="swatch" style="--swatch-color: #541388"></span>
+              <span class="swatch" style="--swatch-color: #ffd400"></span>
+              <span class="swatch" style="--swatch-color: #d90368"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================== HOW IT WORKS ================== -->
+  <section class="section" id="how-it-works">
+    <div class="container">
+      <div class="section-header">
+        <h2>How Emotion2Color works</h2>
+        <p>
+          A simple three-step flow that connects your emotions with AI-powered
+          color mapping.
+        </p>
+      </div>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-icon">
+            <i class="fas fa-keyboard"></i>
+          </div>
+          <h3>1. Describe your emotion</h3>
+          <p>
+            Type how you feel in your own words — anything from “drained and
+            tired” to “peaceful and grateful”.
+          </p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-icon">
+            <i class="fas fa-brain"></i>
+          </div>
+          <h3>2. AI interprets your mood</h3>
+          <p>
+            The Flask backend calls OpenAI to understand your emotional
+            context and generate a matching color palette & composition.
+          </p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-icon">
+            <i class="fas fa-palette"></i>
+          </div>
+          <h3>3. Watch it become art</h3>
+          <p>
+            The React frontend paints those colors into a dynamic canvas and
+            stores your mood in MongoDB as part of your journal.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================== LIVE DEMO ================== -->
+  <section class="section section-alt" id="demo">
+    <div class="container demo-container">
+      <div class="demo-input">
+        <h2>Try the live visualizer</h2>
+        <p>
+          This is a frontend-only demo right now. In the full app, this button
+          will call your Flask + OpenAI backend.
+        </p>
+
+        <label for="emotionText" class="field-label">How are you feeling right now?</label>
+        <textarea
+          id="emotionText"
+          class="emotion-input"
+          placeholder="Example: I feel tired but optimistic about tomorrow..."
+          rows="4"
+        ></textarea>
+
+        <button class="btn btn-primary full-width" id="generateBtn">
+          <i class="fas fa-wand-magic-sparkles"></i>
+          Generate Color Art
+        </button>
+
+        <small class="demo-note">
+          In production, this button would hit:
+          <code>POST /api/emotion-to-color</code> on your Flask backend.
+        </small>
+      </div>
+
+      <div class="demo-preview">
+        <div class="preview-card large">
+          <div class="preview-header">
+            <span class="badge badge-soft">Demo Canvas</span>
+            <span class="preview-status">
+              <i class="fas fa-circle-notch fa-spin"></i> AI mock mode
+            </span>
+          </div>
+          <div class="preview-art large" id="demoArt"></div>
+          <div class="preview-footer">
+            <p class="preview-emotion" id="demoEmotionText">
+              Your emotion will reflect here.
+            </p>
+            <div class="preview-swatches" id="demoSwatches">
+              <!-- JS will inject swatches -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================== MOOD JOURNAL ================== -->
+  <section class="section" id="journal">
+    <div class="container">
+      <div class="section-header">
+        <h2>Mood journal preview</h2>
+        <p>
+          Every entry becomes a snapshot: your words, the colors they created,
+          and the moment in time.
+        </p>
+      </div>
+
+      <div class="journal-grid">
+        <article class="journal-card">
+          <div class="journal-tag calm">Calm</div>
+          <h3>“Peaceful and recharged.”</h3>
+          <p class="journal-meta">Yesterday · 10:34 PM</p>
+          <div class="journal-swatches">
+            <span class="swatch" style="--swatch-color:#8EC5FC"></span>
+            <span class="swatch" style="--swatch-color:#E0C3FC"></span>
+            <span class="swatch" style="--swatch-color:#A1C4FD"></span>
+          </div>
+        </article>
+
+        <article class="journal-card">
+          <div class="journal-tag intense">Intense</div>
+          <h3>“Overwhelmed but determined.”</h3>
+          <p class="journal-meta">2 days ago · 7:12 PM</p>
+          <div class="journal-swatches">
+            <span class="swatch" style="--swatch-color:#FF512F"></span>
+            <span class="swatch" style="--swatch-color:#DD2476"></span>
+            <span class="swatch" style="--swatch-color:#FF9A9E"></span>
+          </div>
+        </article>
+
+        <article class="journal-card">
+          <div class="journal-tag hopeful">Hopeful</div>
+          <h3>“Nervous but excited about the future.”</h3>
+          <p class="journal-meta">Last week · 6:01 AM</p>
+          <div class="journal-swatches">
+            <span class="swatch" style="--swatch-color:#F6D365"></span>
+            <span class="swatch" style="--swatch-color:#FDA085"></span>
+            <span class="swatch" style="--swatch-color:#FFDEE9"></span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================== FOOTER ================== -->
+  <footer class="footer">
+    <div class="container footer-container">
+      <div class="footer-left">
+        <a href="#" class="logo footer-logo">
+          <img
+            src="{{ url_for('static', filename='assets/logo.svg') }}"
+            alt="Emotion2Color logo"
+            class="logo-icon"
+          />
+          <span class="logo-text">Emotion<span>2</span>Color</span>
+        </a>
+        <p>AI-driven emotion visualization & mood journaling.</p>
+      </div>
+
+      <div class="footer-right">
+        <div class="footer-links">
+          <a href="#hero">Home</a>
+          <a href="#how-it-works">How it works</a>
+          <a href="#demo">Live Demo</a>
+          <a href="#journal">Journal</a>
+        </div>
+        <p class="footer-credit">
+          Built with <i class="fas fa-heart"></i> using React, Flask, MongoDB & OpenAI.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="{{ url_for('static', filename='script.js') }}?v=1"></script>
+</body>
+</html>
